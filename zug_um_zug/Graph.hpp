@@ -9,12 +9,12 @@
 
 class Node {
 public:
-    Node(const size_t id);
-    const size_t getId() const;
+    Node(const std::string& name);
+    const std::string getName() const;
     const bool operator==(const Node& other) const;
-    const bool operator==(const size_t otherId) const;
+    const bool operator==(const std::string& otherName) const;
 private:
-    const size_t id;
+    const std::string name;
 };
 
 class ODPair {
@@ -46,18 +46,15 @@ private:
 class Graph {
 public:
     Graph();
-    const bool containsNode(const std::string& nodeName) const;
+    const bool containsNode(const std::string& nodeName) const; // TODO: get rid
     void createAndInsertNode(const std::string& newNodeName);
     const Node* const getNode(const std::string& nodeName) const;
-    const Node* const getNode(const size_t nodeId) const;
-    const std::string getNodeName(const Node& node) const;
     const bool containsEdge(const ODPair& OD) const;
     void createAndInsertEdge(const ODPair& OD, const int costSubway, const int costTram, const int bonus);
     void print() const;
 private:
     std::vector<Node> nodes;
     std::vector<Edge> edges;
-    std::unordered_map<std::string, const size_t> nameToIdIndexDictionary;
 };
 
 //const vector<const Edge*> getKanten(const Node* const knoten, const vector<const Edge*>& kanten) {
