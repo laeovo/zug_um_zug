@@ -57,7 +57,7 @@ public:
 private:
     std::vector<Node> nodes;
     std::vector<Edge> edges;
-    std::unordered_map<std::string, const size_t> nameToIdIndex;
+    std::unordered_map<std::string, const size_t> nameToIdIndexDictionary;
 };
 
 //const vector<const Edge*> getKanten(const Node* const knoten, const vector<const Edge*>& kanten) {

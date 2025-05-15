@@ -78,20 +78,20 @@ const int Edge::getBonus() const {
 Graph::Graph() {}
 
 const bool Graph::containsNode(const string& nodeName) const {
-    return this->nameToIdIndex.find(nodeName) != this->nameToIdIndex.end();
+    return this->nameToIdIndexDictionary.find(nodeName) != this->nameToIdIndexDictionary.end();
 }
 
 void Graph::createAndInsertNode(const string& newNodeName) {
     if (!this->containsNode(newNodeName)) {
         const size_t newNodeId{this->nodes.size()};
         this->nodes.push_back(Node(newNodeId));
-        this->nameToIdIndex.insert({newNodeName, newNodeId});
+        this->nameToIdIndexDictionary.insert({newNodeName, newNodeId});
     }
 }
 
 const Node* const Graph::getNode(const std::string& nodeName) const {
     if (this->containsNode(nodeName)) {
-        return this->getNode(this->nameToIdIndex.at(nodeName));
+        return this->getNode(this->nameToIdIndexDictionary.at(nodeName));
     }
     return NULL;
 }
@@ -107,7 +107,7 @@ const string Graph::getNodeName(const Node& node) const {
     if (node == NULL) {
         return "NULL";
     }
-    for (const pair<string, size_t> nameIdPair : this->nameToIdIndex) {
+    for (const pair<string, size_t> nameIdPair : this->nameToIdIndexDictionary) {
         if (nameIdPair.second == node.getId()) return nameIdPair.first;
     }
     return "NODE NOT FOUND";
@@ -132,7 +132,7 @@ void Graph::createAndInsertEdge(const ODPair& OD, const int costSubway, const in
 void Graph::print() const {
     cout << "Printing Graph:" << endl;
     cout << "Nodes:" << endl;
-    for (const pair<string, const size_t> nameIdPair : this->nameToIdIndex) {
+    for (const pair<string, const size_t> nameIdPair : this->nameToIdIndexDictionary) {
         cout << " " << nameIdPair.first << " (" << nameIdPair.second << ")" <<  endl;
     }
     cout << "Edges:" << endl;
