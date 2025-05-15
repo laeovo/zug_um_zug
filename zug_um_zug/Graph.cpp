@@ -52,11 +52,7 @@ const string ODPair::toString() const {
 
 
 
-Edge::Edge(const ODPair& OD, const int costSubway, const int costTram, const int bonus, const size_t id): OD(OD), costSubway(costSubway), costTram(costTram), bonus(bonus), id(id) {
-    for (const Node* node : this->OD.getNodes()) {
-        this->info.append(node->getName());
-    }
-};
+Edge::Edge(const ODPair& OD, const int costSubway, const int costTram, const int bonus, const size_t id): OD(OD), costSubway(costSubway), costTram(costTram), bonus(bonus), id(id) {};
 
 const ODPair& Edge::getOD() const {
     return this->OD;
@@ -109,9 +105,6 @@ void Graph::createAndInsertEdge(const ODPair& OD, const int costSubway, const in
     if (!this->containsEdge(OD)) {
         this->edges.push_back({OD, costSubway, costTram, bonus, this->edges.size()});
     }
-    // Test
-    // const Edge& latestEdge{this->edges.back()};
-    // cout << latestEdge.getOD().toString() << endl;
 }
 
 void Graph::print() const {
