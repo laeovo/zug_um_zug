@@ -41,6 +41,7 @@ private:
     const int costTram;
     const int bonus;
     const size_t id;
+    std::string info{""};
 };
 
 class Graph {

@@ -52,7 +52,11 @@ const string ODPair::toString() const {
 
 
 
-Edge::Edge(const ODPair& OD, const int costSubway, const int costTram, const int bonus, const size_t id): OD(OD), costSubway(costSubway), costTram(costTram), bonus(bonus), id(id) {};
+Edge::Edge(const ODPair& OD, const int costSubway, const int costTram, const int bonus, const size_t id): OD(OD), costSubway(costSubway), costTram(costTram), bonus(bonus), id(id) {
+    for (const Node* node : this->OD.getNodes()) {
+        this->info.append(node->getName());
+    }
+};
 
 const ODPair& Edge::getOD() const {
     return this->OD;
@@ -112,15 +116,25 @@ void Graph::createAndInsertEdge(const ODPair& OD, const int costSubway, const in
 
 void Graph::print() const {
     cout << "Printing Graph:" << endl;
-    cout << "Nodes:" << endl;
-    for (const Node& node : this->nodes) {
-        cout << " " << node.getName() <<  endl;
+    cout << "Nodes (" << this->nodes.size() << "):" << endl;
+    if (this->nodes.size() == 0) {
+        cout << " (none)" << endl;
     }
-    cout << "Edges:" << endl;
-    for (const Edge& edge : this->edges) {
-        for (const Node* node : edge.getOD().getNodes()) {
-            cout << node->getName();
+    else {
+        for (const Node& node : this->nodes) {
+            cout << " " << node.getName() <<  endl;
         }
-        cout << " " << edge.getCostSubway() << " " << edge.getCostTram() << " " << edge.getBonus() << endl;
+    }
+    cout << "Edges (" << this->edges.size() << "):" << endl;
+    if (this->edges.size() == 0) {
+        cout << " (none)" << endl;
+    }
+    else {
+        for (const Edge& edge : this->edges) {
+            for (const Node* node : edge.getOD().getNodes()) {
+                cout << " " << node->getName();
+            }
+            cout << " " << edge.getCostSubway() << " " << edge.getCostTram() << " " << edge.getBonus() << endl;
+        }
     }
 }
