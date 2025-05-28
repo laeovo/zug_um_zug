@@ -274,9 +274,9 @@ const bool Solution::checkConnected() const {
     vector<const Node*> visited;
     const Node* startNode{*this->edges.front()->getOD().getNodes().begin()};
     visited.push_back(startNode);
-    vector<const Node*>::iterator i = visited.begin();
-    while (i != visited.end()) {
-        const vector<const Node*> star{this->graph.getStar(*i)};
+    size_t i = 0;
+    while (i < visited.size()) {
+        const vector<const Node*> star{this->graph.getStar(visited[i])};
         for (const Node* n : star) {
             if (find(visited.begin(), visited.end(), n) == visited.end()) {
                 visited.push_back(n);
