@@ -39,12 +39,22 @@ const bool ODPair::contains(const Node& search) const {
 }
 
 const string ODPair::toString() const {
-    string output{"OD-Pair:"};
+    string output{""};
     for (const Node* node: this->nodes) {
-        output.append(" ");
+        output.append("-");
         output.append(node->getName());
     }
     return output;
+}
+
+
+
+
+
+Route::Route(const ODPair& OD, const int bonus) : OD(OD), bonus(bonus) {}
+
+void Route::print() const {
+    cout << "Route: " << this->OD.toString() << "  Bonus: " << this->bonus << endl;
 }
 
 
@@ -163,7 +173,7 @@ void Graph::doPrecomputations() {
 
 
 
-Solution::Solution(const Graph& graph, const vector<bool>& edges) : graph(graph), edgesVector(edges) {
+Solution::Solution(const Graph& graph, const vector<bool>& edges, const vector<Route>& routes, const vector<const Node*> mustIncludes) : graph(graph), edgesVector(edges), routes(routes), mustIncludes(mustIncludes) {
     for (size_t i = 0; i < this->graph.getEdges().size(); ++i) {
         if (this->edgesVector[i]) this->edges.push_back(&graph.getEdges()[i]);
     }
@@ -176,6 +186,24 @@ void Solution::print() const {
         cout << " ";
     }
     cout << "Cost: " << this->computeCostSubway() << "/" << this->computeCostTram() << " Bonus: " << this->computeBonus() << endl;
+}
+
+void Solution::printLong() const {
+    cout << "Solution:" << endl;
+    cout << " ";
+    this->print();
+    cout << " Edges:" << endl;
+    for (const Edge* const edge : this->edges) {
+        cout << "  " << edge->getOD().toString() << "  Cost: " << edge->getCostSubway() << "/" << edge->getCostTram() << "  Bonus: " << edge->getBonus() << endl;
+    }
+    cout << " Finished routes:" << endl;
+    for (const Route& route : this->routes) {
+        if (true) {
+            cout << "  ";
+            route.print();
+        }
+    }
+    cout << endl;
 }
 
 const int Solution::computeCostSubway() const {
@@ -199,20 +227,24 @@ const int Solution::computeBonus() const {
     for (size_t i = 0; i < this->graph.getEdges().size(); ++i) {
         if (this->edgesVector[i]) output += graph.getEdges()[i].getBonus();
     }
-    // TODO: compute bonus by routes
+    return output + this->computeRouteBonus();
+}
+
+const int Solution::computeRouteBonus() const {
+    int output{0};
+    for (const Route& route : this->routes) {
+        if (this->containsODPair(route.OD)) {
+            output += route.bonus;
+        }
+    }
     return output;
 }
 
 const bool Solution::check() const {
-    if (!this->checkImportantStations()) return false;
+    if (!this->checkMustIncludes()) return false;
     if (!this->checkCost()) return false;
     if (!this->checkNoCycles()) return false;
     if (!this->checkConnected()) return false;
-    return true;
-}
-
-const bool Solution::checkImportantStations() const {
-    
     return true;
 }
 
@@ -235,5 +267,35 @@ const bool Solution::checkConnected() const {
     vector<const Node*> visited;
     const Node* startNode{*this->edges[0]->getOD().getNodes().begin()};
     visited.push_back(startNode);
+    // TODO: ...
+    return true;
+}
+
+const bool Solution::checkMustIncludes() const {
+    for (const Node* node : this->mustIncludes) {
+        if (!this->containsNode(node)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+const bool Solution::containsNode(const Node* node) const {
+    for (const Edge* edge : this->edges) {
+        for (const Node* containedNode : edge->getOD().getNodes()) {
+            if (node == containedNode) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+const bool Solution::containsODPair(const ODPair& OD) const {
+    for (const Node* node : OD.getNodes()) {
+        if (!this->containsNode(node)) {
+            return false;
+        }
+    }
     return true;
 }
