@@ -63,10 +63,12 @@ public:
     const std::vector<Node>& getNodes() const;
     void print() const;
     void doPrecomputations();
+    const std::vector<const Node*> getStar(const Node* node) const;
 private:
     std::vector<Node> nodes;
     std::vector<Edge> edges;
-    std::vector<std::vector<const Node*>> stars;
+//    std::vector<std::vector<const Node*>> stars;
+    std::unordered_map<const Node*, std::vector<const Node*>> stars;
 };
 
 class Solution {

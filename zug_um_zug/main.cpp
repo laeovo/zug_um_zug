@@ -72,7 +72,7 @@ int main(int argc, const char * argv[]) {
     // read routes
     vector<Route> routes;
     fstream fin_routes;
-    fin_routes.open("Users/leovornberger/Code/zug_um_zug/routes.csv");
+    fin_routes.open("/Users/leovornberger/Code/zug_um_zug/routes.csv");
     fin_routes >> line; // skip header line
     fin_routes >> line;
     while (line != "end") {
@@ -96,7 +96,7 @@ int main(int argc, const char * argv[]) {
     // read must-includes
     vector<const Node*> mustIncludes;
     fstream fin_mustIncludes;
-    fin_mustIncludes.open("Users/leovornberger/Code/zug_um_zug/must-include.csv");
+    fin_mustIncludes.open("/Users/leovornberger/Code/zug_um_zug/must-include.csv");
     fin_mustIncludes >> line; // skip header line
     fin_mustIncludes >> line;
     while (line != "end") {

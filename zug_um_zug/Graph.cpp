@@ -151,10 +151,8 @@ void Graph::print() const {
 }
 
 void Graph::doPrecomputations() {
-    this->stars = vector<vector<const Node*>>(this->nodes.size());
     // Compute stars
-    for (size_t i = 0; i < this->nodes.size(); ++i) {
-        const Node& center{this->nodes[i]};
+    for (const Node& center : this->nodes) {
         vector<const Node*> star{};
         for (const Node& other : this->nodes) {
             for (const Edge& edge : this->edges) {
@@ -164,8 +162,12 @@ void Graph::doPrecomputations() {
                 }
             }
         }
-        this->stars[i] = star;
+        this->stars.insert({&center, star});
     }
+}
+
+const vector<const Node*> Graph::getStar(const Node* node) const {
+    return this->stars.at(node);
 }
 
 
@@ -198,7 +200,7 @@ void Solution::printLong() const {
     }
     cout << " Finished routes:" << endl;
     for (const Route& route : this->routes) {
-        if (true) {
+        if (this->containsODPair(route.OD)) {
             cout << "  ";
             route.print();
         }
@@ -250,7 +252,7 @@ const bool Solution::check() const {
 
 const bool Solution::checkCost() const {
     if (this->computeCostSubway() != 5) return false;
-    if (this->computeCostTram() != 19) return false;
+    if (this->computeCostTram() != 11) return false;
     
     return true;
 }
