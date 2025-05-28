@@ -1,0 +1,39 @@
+Origin;Destination;CostSubway;CostTram;Bonus
+Moabit;Hauptbahnhof;1;0;5
+Hauptbahnhof;Friedrichstadtpalast;1;0;5
+Friedrichstadtpalast;Pergamon Museum;1;0;1
+Pergamonmuseum;Alex;1;0;3
+Alex;Moritzplatz;1;0;5
+Moritzplatz;Checkpoint Charlie;1;0;5
+Checkpoint Charlie;Potsdamer Platz;1;0;3
+Potsdamer Platz;Gemäldegalerie;1;0;3
+Gemäldegalerie;Zoo;1;0;3
+Zoo;Kudamm;1;0;1
+Kudamm;Charlottenburger Tor;1;0;3
+Charlottenburger Tor;Moabit;1;0;5
+Charlottenburger Tor;Siegessäule;0;3;4
+Moabit;Siegessäule;0;3;4
+Zoo;Siegessäule;0;2;2
+Siegessäule;Tiergarten;0;2;2
+Siegessäule;Gemäldegalerie;0;3;4
+Tiergarten;Gemäldegalerie;0;2;2
+Tiergarten;Hauptbahnhof;0;2;2
+Tiergarten;Brandenburger Tor;0;2;2
+Hauptbahnhof;Reichstag;0;1;1
+Reichstag;Brandenburger Tor;0;1;1
+Tiergarten;Potsdamer Platz;0;2;2
+Potsdamer Platz;Brandenburger Tor;0;2;2
+Reichstag;Friedrichstadtpalast;0;2;2
+Brandenburger Tor;Unter den Linden;0;1;1
+Friedrichstadtpalast;Unter den Linden;0;1;1
+Potsdamer Platz;Gendarmenmarkt;0;3;4
+Unter den Linden;Gendarmenmarkt;0;1;1
+Unter den Linden;Friedrichstadtpalast;0;1;1
+Checkpoint Charlie;Gendarmenmarkt;0;1;1
+Unter den Linden;Pergamon Museum;0;1;1
+Gendarmenmarkt;Humboldt Forum;0;2;2
+Friedrichstadtpalast;Alex;0;4;7
+Gendarmenmarkt;Moritzplatz;0;4;7
+Humboldt Forum;Moritzplatz;0;3;4
+Humboldt Forum;Alex;0;2;2
+Pergamon Museum;Humboldt Forum;0;1;1
