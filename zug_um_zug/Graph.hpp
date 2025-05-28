@@ -90,6 +90,7 @@ public:
 private:
     const std::vector<bool> edgesVector;
     std::vector<const Edge*> edges;
+    std::vector<const Node*> nodes;
     const Graph& graph;
     const std::vector<Route>& routes;
     const std::vector<const Node*> mustIncludes;

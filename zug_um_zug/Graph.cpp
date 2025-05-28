@@ -179,6 +179,11 @@ Solution::Solution(const Graph& graph, const vector<bool>& edges, const vector<R
     for (size_t i = 0; i < this->graph.getEdges().size(); ++i) {
         if (this->edgesVector[i]) this->edges.push_back(&graph.getEdges()[i]);
     }
+    for (const Edge* edge : this->edges) {
+        for (const Node* node : edge->getOD().getNodes()) {
+            if (find(this->nodes.begin(), this->nodes.end(), node) == this->nodes.end()) this->nodes.push_back(node);
+        }
+    }
 }
 
 void Solution::print() const {
@@ -267,10 +272,22 @@ const bool Solution::checkNoCycles() const {
 
 const bool Solution::checkConnected() const {
     vector<const Node*> visited;
-    const Node* startNode{*this->edges[0]->getOD().getNodes().begin()};
+    const Node* startNode{*this->edges.front()->getOD().getNodes().begin()};
     visited.push_back(startNode);
-    // TODO: ...
-    return true;
+    vector<const Node*>::iterator i = visited.begin();
+    while (i != visited.end()) {
+        const vector<const Node*> star{this->graph.getStar(*i)};
+        for (const Node* n : star) {
+            if (find(visited.begin(), visited.end(), n) == visited.end()) {
+                visited.push_back(n);
+            }
+        }
+        ++i;
+    }
+    if (visited.size() == this->nodes.size()) {
+        return true;
+    }
+    return false;
 }
 
 const bool Solution::checkMustIncludes() const {

@@ -41,6 +41,7 @@ int main(int argc, const char * argv[]) {
         graph.createAndInsertNode(line);
         fin_nodes >> line;
     }
+    cout << graph.getNodes().size() << " Nodes erstellt" << endl;
     
     // Read edges
     fstream fin_edges;
@@ -66,6 +67,7 @@ int main(int argc, const char * argv[]) {
         graph.createAndInsertEdge({*origin, *destination}, costSubway, costTram, bonus);
         fin_edges >> line;
     }
+    cout << graph.getEdges().size() << " Edges erstellt" << endl;
     
     graph.doPrecomputations();
     
@@ -92,6 +94,7 @@ int main(int argc, const char * argv[]) {
         routes.push_back(newRoute);
         fin_routes >> line;
     }
+    cout << routes.size() << " Routen erstellt" << endl;
     
     // read must-includes
     vector<const Node*> mustIncludes;
@@ -103,6 +106,7 @@ int main(int argc, const char * argv[]) {
         mustIncludes.push_back(graph.getNode(line));
         fin_mustIncludes >> line;
     }
+    cout << mustIncludes.size() << " Must-Includes gelesen" << endl;
     
     // Create and test solutions
     vector<bool> solutionCandidateVector{};
