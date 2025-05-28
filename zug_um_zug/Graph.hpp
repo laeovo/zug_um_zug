@@ -51,18 +51,32 @@ public:
     const Node* const getNode(const std::string& nodeName) const;
     const bool containsEdge(const ODPair& OD) const;
     void createAndInsertEdge(const ODPair& OD, const int costSubway, const int costTram, const int bonus);
+    const std::vector<Edge>& getEdges() const;
+    const std::vector<Node>& getNodes() const;
     void print() const;
+    void doPrecomputations();
 private:
     std::vector<Node> nodes;
     std::vector<Edge> edges;
+    std::vector<std::vector<const Node*>> stars;
 };
 
-//const vector<const Edge*> getKanten(const Node* const knoten, const vector<const Edge*>& kanten) {
-//    vector<const Edge*> output{};
-//    for (const Edge* kante : kanten) {
-//        if (kante->getStart() == knoten || kante->getEnde() == knoten) output.push_back(kante);
-//    }
-//    return output;
-//}
+class Solution {
+public:
+    Solution(const Graph& graph, const std::vector<bool>& edges);
+    void print() const;
+    const int computeCostSubway() const;
+    const int computeCostTram() const;
+    const int computeBonus() const;
+    const bool check() const; // checks if it makes sense to store this solution
+    const bool checkImportantStations() const;
+    const bool checkCost() const;
+    const bool checkNoCycles() const;
+    const bool checkConnected() const;
+private:
+    const std::vector<bool> edgesVector;
+    std::vector<const Edge*> edges;
+    const Graph& graph;
+};
 
 #endif /* Graph_hpp */
