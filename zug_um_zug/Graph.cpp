@@ -141,6 +141,7 @@ void Graph::print() const {
 }
 
 void Graph::doPrecomputations() {
+    this->stars = vector<vector<const Node*>>(this->nodes.size());
     // Compute stars
     for (size_t i = 0; i < this->nodes.size(); ++i) {
         const Node& center{this->nodes[i]};

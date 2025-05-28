@@ -76,9 +76,15 @@ int main(int argc, const char * argv[]) {
         solutionCandidateVector.push_back(false);
     }
     
+    int highestBonus{0};
     while (true) { // TODO: find break condition
         const Solution solutionCandidate(graph, solutionCandidateVector);
-        solutionCandidate.print();
+        if (solutionCandidate.check()) {
+            if (solutionCandidate.computeBonus() > highestBonus) {
+                highestBonus = solutionCandidate.computeBonus();
+                solutionCandidate.print();
+            }
+        }
         for (size_t digit = 0; digit < solutionCandidateVector.size(); ++digit) {
             if (solutionCandidateVector[digit] == true) solutionCandidateVector[digit] = false;
             else if (solutionCandidateVector[digit] == false) {
