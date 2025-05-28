@@ -123,6 +123,7 @@ int main(int argc, const char * argv[]) {
                 solutionCandidate.printLong();
             }
         }
+//        if (solutionCandidateVector[10]) solutionCandidate.print();
         for (size_t digit = 0; digit < solutionCandidateVector.size(); ++digit) {
             if (solutionCandidateVector[digit] == true) solutionCandidateVector[digit] = false;
             else if (solutionCandidateVector[digit] == false) {

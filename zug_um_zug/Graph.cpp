@@ -203,6 +203,10 @@ void Solution::printLong() const {
     for (const Edge* const edge : this->edges) {
         cout << "  " << edge->getOD().toString() << "  Cost: " << edge->getCostSubway() << "/" << edge->getCostTram() << "  Bonus: " << edge->getBonus() << endl;
     }
+    cout << " Nodes:" << endl;
+    for (const Node* node : this->nodes) {
+        cout << "  " << node->getName() << endl;
+    }
     cout << " Finished routes:" << endl;
     for (const Route& route : this->routes) {
         if (this->containsODPair(route.OD)) {
@@ -210,6 +214,11 @@ void Solution::printLong() const {
             route.print();
         }
     }
+    cout << " Solution is";
+    if (!this->checkConnected()) {
+        cout << " not";
+    }
+    cout << " connected." << endl;
     cout << endl;
 }
 
@@ -248,7 +257,7 @@ const int Solution::computeRouteBonus() const {
 }
 
 const bool Solution::check() const {
-    if (!this->checkMustIncludes()) return false;
+//    if (!this->checkMustIncludes()) return false;
     if (!this->checkCost()) return false;
     if (!this->checkNoCycles()) return false;
     if (!this->checkConnected()) return false;
@@ -256,8 +265,8 @@ const bool Solution::check() const {
 }
 
 const bool Solution::checkCost() const {
-    if (this->computeCostSubway() != 5) return false;
-    if (this->computeCostTram() != 11) return false;
+    if (this->computeCostSubway() > 5) return false;
+    if (this->computeCostTram() > 11) return false;
     
     return true;
 }
@@ -271,12 +280,23 @@ const bool Solution::checkNoCycles() const {
 }
 
 const bool Solution::checkConnected() const {
+    if (this->nodes.empty()) return true;
     vector<const Node*> visited;
     const Node* startNode{*this->edges.front()->getOD().getNodes().begin()};
     visited.push_back(startNode);
     size_t i = 0;
     while (i < visited.size()) {
-        const vector<const Node*> star{this->graph.getStar(visited[i])};
+//        const vector<const Node*> star{this->graph.getStar(visited[i])};
+        vector<const Node*> star{};
+        for (const Edge* e : this->edges) {
+            if (e->getOD().contains(*visited[i])) {
+                for (const Node* n : e->getOD().getNodes()) {
+                    if (n != visited[i]) {
+                        star.push_back(n);
+                    }
+                }
+            }
+        }
         for (const Node* n : star) {
             if (find(visited.begin(), visited.end(), n) == visited.end()) {
                 visited.push_back(n);
@@ -284,6 +304,7 @@ const bool Solution::checkConnected() const {
         }
         ++i;
     }
+//    cout << "checkConnected:: visited.size = " << visited.size() << ", this->nodes.size = " << this->nodes.size() << endl;
     if (visited.size() == this->nodes.size()) {
         return true;
     }
