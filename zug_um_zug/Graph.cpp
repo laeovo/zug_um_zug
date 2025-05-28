@@ -107,14 +107,6 @@ void Graph::createAndInsertEdge(const ODPair& OD, const int costSubway, const in
     }
 }
 
-const vector<Edge>& Graph::getEdges() const {
-    return this->edges;
-}
-
-const vector<Node>& Graph::getNodes() const {
-    return this->nodes;
-}
-
 void Graph::print() const {
     cout << "Printing Graph:" << endl;
     cout << "Nodes (" << this->nodes.size() << "):" << endl;
@@ -138,101 +130,4 @@ void Graph::print() const {
             cout << " " << edge.getCostSubway() << " " << edge.getCostTram() << " " << edge.getBonus() << endl;
         }
     }
-}
-
-void Graph::doPrecomputations() {
-    // Compute stars
-    for (size_t i = 0; i < this->nodes.size(); ++i) {
-        const Node& center{this->nodes[i]};
-        vector<const Node*> star{};
-        for (const Node& other : this->nodes) {
-            for (const Edge& edge : this->edges) {
-                if (edge.getOD().contains(center) && edge.getOD().contains(other)) {
-                    star.push_back(&other);
-                    break;
-                }
-            }
-        }
-        this->stars[i] = star;
-    }
-}
-
-
-
-
-
-
-Solution::Solution(const Graph& graph, const vector<bool>& edges) : graph(graph), edgesVector(edges) {
-    for (size_t i = 0; i < this->graph.getEdges().size(); ++i) {
-        if (this->edgesVector[i]) this->edges.push_back(&graph.getEdges()[i]);
-    }
-}
-
-void Solution::print() const {
-    for (size_t i = 0; i < this->edgesVector.size(); ++i) {
-        if (this->edgesVector[i]) cout << "1";
-        if (!this->edgesVector[i]) cout << "0";
-        cout << " ";
-    }
-    cout << "Cost: " << this->computeCostSubway() << "/" << this->computeCostTram() << " Bonus: " << this->computeBonus() << endl;
-}
-
-const int Solution::computeCostSubway() const {
-    int output{0};
-    for (const Edge* edge : this->edges) {
-        output += edge->getCostSubway();
-    }
-    return output;
-}
-
-const int Solution::computeCostTram() const {
-    int output{0};
-    for (size_t i = 0; i < this->graph.getEdges().size(); ++i) {
-        if (this->edgesVector[i]) output += graph.getEdges()[i].getCostTram();
-    }
-    return output;
-}
-
-const int Solution::computeBonus() const {
-    int output{0};
-    for (size_t i = 0; i < this->graph.getEdges().size(); ++i) {
-        if (this->edgesVector[i]) output += graph.getEdges()[i].getBonus();
-    }
-    // TODO: compute bonus by routes
-    return output;
-}
-
-const bool Solution::check() const {
-    if (!this->checkImportantStations()) return false;
-    if (!this->checkCost()) return false;
-    if (!this->checkNoCycles()) return false;
-    if (!this->checkConnected()) return false;
-    return true;
-}
-
-const bool Solution::checkImportantStations() const {
-    
-    return true;
-}
-
-const bool Solution::checkCost() const {
-    if (this->computeCostSubway() != 5) return false;
-    if (this->computeCostTram() != 19) return false;
-    
-    return true;
-}
-
-const bool Solution::checkNoCycles() const {
-    // Using Depth first search
-//    vector<bool> visited{};
-//    for (size_t i = 0; i < this->graph.getNodes().size(); ++i) visited.push_back(false);
-    
-    return true;
-}
-
-const bool Solution::checkConnected() const {
-    vector<const Node*> visited;
-    const Node* startNode{*this->edges[0]->getOD().getNodes().begin()};
-    visited.push_back(startNode);
-    return true;
 }

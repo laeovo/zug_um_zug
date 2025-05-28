@@ -67,29 +67,7 @@ int main(int argc, const char * argv[]) {
         fin_edges >> line;
     }
     
-    graph.doPrecomputations();
     graph.print();
-    
-    // Create and test solutions
-    vector<bool> solutionCandidateVector{};
-    for (size_t i = 0; i < graph.getEdges().size(); ++i) {
-        solutionCandidateVector.push_back(false);
-    }
-    
-    while (true) { // TODO: find break condition
-        const Solution solutionCandidate(graph, solutionCandidateVector);
-        solutionCandidate.print();
-        for (size_t digit = 0; digit < solutionCandidateVector.size(); ++digit) {
-            if (solutionCandidateVector[digit] == true) solutionCandidateVector[digit] = false;
-            else if (solutionCandidateVector[digit] == false) {
-                solutionCandidateVector[digit] = true;
-                break;
-            }
-        }
-    }
-    
-    
-    
 
     return 0;
 }
